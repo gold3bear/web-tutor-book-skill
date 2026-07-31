@@ -1,6 +1,6 @@
 ---
 name: web-tutor-book
-description: 将文章、Markdown、PDF、DOCX、教程稿、聊天案例或知识库材料编辑成内容保真的网页教程书、翻页手册或 EPUB 风格电子书，并可从同一组件树导出视觉保真的可搜索 PDF。使用语义分页、目录、键盘/触摸翻页、断点续读、连续阅读、PDF 与可选 EPUB 3 导出；通过逐块内容台账防止原文在排版时被擅自摘要或删减。Use when users ask for web books, tutorial books, interactive manuals, paginated guides, EPUB-like readers, high-fidelity PDF exports of a web book, O'Reilly-style technical books, or when a slide/video-presentation workflow would compress too much source text.
+description: 将文章、Markdown、PDF、DOCX、教程稿、聊天案例或知识库材料编辑成内容保真的网页教程书、翻页手册或 EPUB 风格电子书，并可从同一组件树导出视觉保真的可搜索 PDF；也可审查已有教程或 PDF 是否达到内部使用、公开 QuickStart、教程书或正式出版标准。使用语义分页、内容台账、逐页视觉检查和 P0/P1/P2 质量门禁防止删减与低质量交付。Use when users ask for web books, tutorial books, interactive manuals, paginated guides, EPUB-like readers, high-fidelity PDF exports, O'Reilly-style technical books, or quality audits of existing tutorials and PDFs.
 license: MIT
 ---
 
@@ -19,6 +19,21 @@ license: MIT
 7. 将新增解释、编辑提示和原文明确区分；不得把 Agent 补写的内容伪装成来源事实。
 
 每次开始内容规划前，完整阅读 [`references/CONTENT-FIDELITY.md`](references/CONTENT-FIDELITY.md)。每次设计页纲时阅读 [`references/BOOK-PLAN-FORMAT.md`](references/BOOK-PLAN-FORMAT.md)。采用经典技术出版物、动物版画或内容隐喻封面时，完整阅读 [`references/COVER-SYSTEM.md`](references/COVER-SYSTEM.md)。每次实现阅读器或做视觉复验时阅读 [`references/READER-CRAFT.md`](references/READER-CRAFT.md)。用户要求 PDF 或打印版时，必须阅读 [`references/PDF-EXPORT.md`](references/PDF-EXPORT.md)。进入最终验收或打包前，完整阅读 [`references/PUBLICATION-QA.md`](references/PUBLICATION-QA.md)。
+
+## 现有文档质量审计模式
+
+当用户要求判断已有教程、网页书或 PDF 是否合格时，不进入制作工作流，改用
+[`references/DOCUMENT-QUALITY-AUDIT.md`](references/DOCUMENT-QUALITY-AUDIT.md)：
+
+1. 先声明目标用途和读者；未说明时按 `public-quickstart` 检查。
+2. 对 PDF 执行元数据、文本层、图片、链接、字体、书签与页面尺寸扫描；可使用
+   [`scripts/audit_pdf.py`](scripts/audit_pdf.py) 产生候选问题。
+3. 渲染全部页面并查看 contact sheet，再放大检查代表页。
+4. 检查任务是否从前置条件走到可验证结果，并覆盖费用、权限、上传、发布、失败处理和安全边界。
+5. 在线核验时间敏感的链接、版本、价格、收益和产品能力。
+6. 先判 P0，再按 100 分模型评分，输出“合格 / 有条件合格 / 不合格”。
+7. 缺少源稿或台账时，明确写“内容保真无法验证”，不得声称 100% 内容覆盖。
+8. 报告必须提供页码证据、修复方式和可复验的通过条件。
 
 ## 工作流
 

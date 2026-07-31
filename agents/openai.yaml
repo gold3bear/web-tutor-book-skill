@@ -1,4 +1,4 @@
 interface:
   display_name: "Web Tutor Book"
-  short_description: "把长篇教程制作成内容完整、可审计的网页电子书与视觉保真 PDF"
-  default_prompt: "Use $web-tutor-book to turn my source material into a faithful paginated tutorial book and, when needed, a visually consistent searchable PDF."
+  short_description: "制作或审计内容完整的网页教程书与视觉保真 PDF"
+  default_prompt: "Use $web-tutor-book to create a faithful paginated tutorial book, or audit an existing tutorial or PDF against publication-quality gates."

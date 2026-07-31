@@ -14,6 +14,7 @@
 - 从同一内容与组件体系导出视觉保真的可搜索 PDF。
 - 支持可选 EPUB 3 输出规划。
 - 提供内容覆盖审计和可选的浏览器自动化审计脚本。
+- 审查已有教程、网页书或 PDF，按 P0/P1/P2 与 100 分模型判断是否达到内部使用、公开 QuickStart、教程书或正式出版标准。
 
 ## 让 Agent 安装
 
@@ -56,11 +57,13 @@ web-tutor-book-skill/
 │   ├── BOOK-PLAN-FORMAT.md
 │   ├── CONTENT-FIDELITY.md
 │   ├── COVER-SYSTEM.md
+│   ├── DOCUMENT-QUALITY-AUDIT.md
 │   ├── PDF-EXPORT.md
 │   ├── PUBLICATION-QA.md
 │   └── READER-CRAFT.md
 └── scripts/
     ├── audit_reader.mjs
+    ├── audit_pdf.py
     └── source_coverage.py
 ```
 
@@ -70,12 +73,14 @@ web-tutor-book-skill/
 
 ```bash
 python3 scripts/source_coverage.py --help
+python3 scripts/audit_pdf.py --help
 node --check scripts/audit_reader.mjs
 ```
 
 `audit_reader.mjs` 是可选的 Playwright 适配器，并不是 Skill 的必装依赖。没有 Playwright 时，本地 Agent 应使用当前环境已有的浏览器能力完成等价验收。
 
+`audit_pdf.py` 使用 `pypdf` 和 `pdfplumber` 生成 PDF 技术候选问题报告。它不能替代逐页视觉检查、任务闭环测试、源稿覆盖审计和时间敏感事实核验。
+
 ## 许可
 
 [MIT License](LICENSE)
-
