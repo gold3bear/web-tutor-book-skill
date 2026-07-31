@@ -1,7 +1,6 @@
 ---
 name: web-tutor-book
 description: 将文章、Markdown、PDF、DOCX、教程稿、聊天案例或知识库材料编辑成内容保真的网页教程书、翻页手册或 EPUB 风格电子书，并可从同一组件树导出视觉保真的可搜索 PDF；也可审查已有教程或 PDF 是否达到内部使用、公开 QuickStart、教程书或正式出版标准。使用语义分页、内容台账、逐页视觉检查和 P0/P1/P2 质量门禁防止删减与低质量交付。Use when users ask for web books, tutorial books, interactive manuals, paginated guides, EPUB-like readers, high-fidelity PDF exports, O'Reilly-style technical books, or quality audits of existing tutorials and PDFs.
-license: MIT
 ---
 
 # Web Tutor Book
