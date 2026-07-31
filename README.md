@@ -15,7 +15,11 @@
 - 支持可选 EPUB 3 输出规划。
 - 提供内容覆盖审计和可选的浏览器自动化审计脚本。
 - 审查已有教程、网页书或 PDF，按 P0/P1/P2 与 100 分模型判断是否达到内部使用、公开 QuickStart、教程书或正式出版标准。
-- 可选接入 LoomLoom 做多页面截图的批量语义复核；默认关闭，跳过时不影响本地制作与发布验收，上传和付费执行均需用户明确确认。
+- 可选调用独立的
+  [loomloom-publication-visual-audit](https://github.com/gold3bear/loomloom-publication-visual-audit-skill)
+  Skill，对整本书的页面截图做云端并行视觉审计，再由本地 Agent 回看原图，接受、
+  重述或驳回云端候选。该能力默认关闭，跳过时不影响本地制作与发布验收；安装、
+  上传和付费执行分别需要用户明确确认。
 
 ## 让 Agent 安装
 
@@ -46,6 +50,19 @@ https://github.com/gold3bear/web-tutor-book-skill
 ```text
 $web-tutor-book 请把这份教程制作成网页电子书和视觉保真的 PDF。
 ```
+
+需要批量书页审计时，可以在本地门禁完成后继续说：
+
+```text
+请启用可选的 loomloom-publication-visual-audit 批量书页视觉审计。
+先准备脱敏截图与页面清单，向我说明上传范围；获得上传确认后再获取 LoomLoom
+报价，并等待我明确确认费用后才执行。云端返回后，请逐条回看高清原图，最终输出
+可追溯的视觉审计报告，不要把云端原始意见直接当成出版结论。
+```
+
+`web-tutor-book` 负责内容台账、页面渲染、本地 DOM/PDF 门禁、修复与最终出版结论；
+外部审计 Skill 负责上传、报价、云端问题发现、结果硬校验、本地原图复核队列和报告。
+外部报告中的 `publishReady=true` 只代表审计闭环，不代表书籍已经达到发布标准。
 
 ## 仓库结构
 
