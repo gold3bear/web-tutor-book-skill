@@ -1,6 +1,6 @@
 ---
 name: web-tutor-book
-description: 将文章、Markdown、PDF、DOCX、教程稿、聊天案例或知识库材料编辑成内容保真的网页教程书、翻页手册或 EPUB 风格电子书，并可从同一组件树导出视觉保真的可搜索 PDF；也可审查已有教程或 PDF 是否达到内部使用、公开 QuickStart、教程书或正式出版标准。使用语义分页、内容台账、逐页视觉检查和 P0/P1/P2 质量门禁防止删减与低质量交付。Use when users ask for web books, tutorial books, interactive manuals, paginated guides, EPUB-like readers, high-fidelity PDF exports, O'Reilly-style technical books, or quality audits of existing tutorials and PDFs.
+description: 将文章、Markdown、PDF、DOCX、教程稿、聊天案例或知识库材料编辑成内容保真的网页教程书、翻页手册或 EPUB 风格电子书，并可从同一组件树导出视觉保真的可搜索 PDF；也可审查已有教程或 PDF 是否达到内部使用、公开 QuickStart、教程书或正式出版标准。使用语义分页、内容台账、逐页视觉检查和 P0/P1/P2 质量门禁防止删减与低质量交付；在用户明确选择后，可把批量书页截图交给独立的 loomloom-publication-visual-audit Skill 做云端问题发现与本地证据复核。Use when users ask for web books, tutorial books, interactive manuals, paginated guides, EPUB-like readers, high-fidelity PDF exports, O'Reilly-style technical books, publication-quality audits, or optional batch page-image audits.
 ---
 
 # Web Tutor Book
@@ -19,6 +19,20 @@ description: 将文章、Markdown、PDF、DOCX、教程稿、聊天案例或知�
 
 每次开始内容规划前，完整阅读 [`references/CONTENT-FIDELITY.md`](references/CONTENT-FIDELITY.md)。每次设计页纲时阅读 [`references/BOOK-PLAN-FORMAT.md`](references/BOOK-PLAN-FORMAT.md)。采用经典技术出版物、动物版画或内容隐喻封面时，完整阅读 [`references/COVER-SYSTEM.md`](references/COVER-SYSTEM.md)。每次实现阅读器或做视觉复验时阅读 [`references/READER-CRAFT.md`](references/READER-CRAFT.md)。用户要求 PDF 或打印版时，必须阅读 [`references/PDF-EXPORT.md`](references/PDF-EXPORT.md)。进入最终验收或打包前，完整阅读 [`references/PUBLICATION-QA.md`](references/PUBLICATION-QA.md)。
 
+## 可选批量视觉审计能力
+
+把 `loomloom-publication-visual-audit` 视为独立、可选的下游 Skill，不复制它的
+Listing、计费、上传、校验或报告逻辑。只有用户明确选择云端批量审计时，才完整阅读
+[`references/LOOMLOOM-VISUAL-REVIEW.md`](references/LOOMLOOM-VISUAL-REVIEW.md)，检查该 Skill
+是否已安装，并把本地页面清单与脱敏截图交给它。
+
+- 项目地址：`https://github.com/gold3bear/loomloom-publication-visual-audit-skill`
+- Skill 文件夹：`loomloom-publication-visual-audit`
+- `web-tutor-book` 负责内容台账、页面渲染、本地 DOM/PDF 门禁、修复和最终出版结论；
+- 外部 Skill 负责 LoomLoom 上传、报价确认、云端批量发现、返回结构校验、原图复核队列和视觉审计报告；
+- 外部报告中的 `publishReady` 只表示视觉审计闭环，不表示书籍可以发布；
+- 未安装、未确认上传、未确认费用或云端不可用时，继续本地流程，不得阻塞制作与导出。
+
 ## 现有文档质量审计模式
 
 当用户要求判断已有教程、网页书或 PDF 是否合格时，不进入制作工作流，改用
@@ -27,10 +41,11 @@ description: 将文章、Markdown、PDF、DOCX、教程稿、聊天案例或知�
 1. 先声明目标用途和读者；未说明时按 `public-quickstart` 检查。
 2. 对 PDF 执行元数据、文本层、图片、链接、字体、书签与页面尺寸扫描；可使用
    [`scripts/audit_pdf.py`](scripts/audit_pdf.py) 产生候选问题。
-3. 渲染全部页面并查看 contact sheet，再放大检查代表页。
-   本地审查完成后，可以向用户提供一次可选的 LoomLoom 批量页面截图辅助审查；
-   默认关闭，用户明确选择时才读取
-   [`references/LOOMLOOM-VISUAL-REVIEW.md`](references/LOOMLOOM-VISUAL-REVIEW.md)。
+3. 渲染全部页面并查看 contact sheet，再放大检查代表页。本地审查完成后，可以向用户
+   提供一次可选的 `loomloom-publication-visual-audit` 批量页面截图审计；默认关闭，
+   用户明确选择时才读取
+   [`references/LOOMLOOM-VISUAL-REVIEW.md`](references/LOOMLOOM-VISUAL-REVIEW.md)
+   并把页面交接给外部 Skill。
 4. 检查任务是否从前置条件走到可验证结果，并覆盖费用、权限、上传、发布、失败处理和安全边界。
 5. 在线核验时间敏感的链接、版本、价格、收益和产品能力。
 6. 先判 P0，再按 100 分模型评分，输出“合格 / 有条件合格 / 不合格”。
@@ -120,10 +135,10 @@ python3 <skill-dir>/scripts/source_coverage.py audit source.md content-ledger.js
 6. 检查所有真实截图的相关性、清晰度、裁切、替代文本和来源说明；没有真实证据时宁可使用明确标注的流程图，也不要伪造产品 UI 或终端截图。
 7. 运行类型检查和正式构建；报告构建体积与资源优化结果。
 8. 由本地 Agent 根据当前环境选择可用浏览器能力，或使用可选的 [`scripts/audit_reader.mjs`](scripts/audit_reader.mjs) 适配器，逐页扫描打印视图和三种阅读器视口；不强制安装 Playwright，要求无空白页、破图、意外越界和控制台错误。
-   本地门禁完成后，可询问一次是否启用 LoomLoom 云端页面截图辅助审查。默认不启用；
-   只有用户明确选择并再次确认上传与付费执行时，才按
-   [`references/LOOMLOOM-VISUAL-REVIEW.md`](references/LOOMLOOM-VISUAL-REVIEW.md)
-   处理。跳过该选项不得阻塞现有流程。
+   本地门禁完成后，只询问一次是否启用 `loomloom-publication-visual-audit` 批量页面截图审计。
+   默认不启用；只有用户明确选择上传后才准备交接包，并由外部 Skill 独立展示报价、等待
+   付费确认、执行云端审查和完成本地证据复核。`web-tutor-book` 只消费外部 Skill
+   已完成本地复核的最终问题，不把云端原始意见直接写入出版结论。跳过该选项不得阻塞现有流程。
 9. 用户要求 PDF 时，按 [`references/PDF-EXPORT.md`](references/PDF-EXPORT.md) 从同一组件树创建专用打印入口。封面、Chapter Open、流程图和截图页保持固定出版物构图；长正文、代码和表格改为可分页流式布局。不得用另一套 ReportLab 版式冒充网页版高保真导出，也不得用整页截图牺牲文字搜索与链接。
 10. PDF 导出后必须逐页渲染并生成 contact sheet，至少放大检查封面、章节扉页、流程图、最长正文、代码/表格、真实截图和末页。清除空白页前同时检查文本、页面墨迹与计划页型，禁止仅凭“提取不到文字”删除图片页或矢量图页。
 11. 用户要求 EPUB 时，从相同章节源导出 EPUB 3；不要把固定尺寸网页直接塞入 EPUB。EPUB 正文应可重排，代码、表格和图片需有降级样式。
@@ -151,7 +166,14 @@ my-tutor-book/
     ├── coverage-final.json
     ├── publication-dom-audit.json
     ├── visual-review.md
-    └── pdf-visual-review.md
+    ├── pdf-visual-review.md
+    └── loomloom-visual-audit/      # 仅在用户选择外部批量审计时创建
+        ├── page-manifest.json
+        ├── input-snapshot.json
+        ├── cloud-validation.json
+        ├── local-verification.json
+        ├── merged-audit.json
+        └── visual-audit-report.md
 ```
 
 ## 最终交付必须说明
@@ -161,5 +183,7 @@ my-tutor-book/
 - 网页翻页版、连续阅读版、PDF 和 EPUB 的实际输出路径；
 - 已测试的视口、交互、构建结果和仍存在的限制。
 - 真实截图的来源与用途、PDF 页数/尺寸/文件大小、contact sheet 与最终校验哈希。
+- 如启用外部批量视觉审计：上传页数与脱敏范围、Listing、运行 ID、费用、最终保留/
+  重述/驳回数量、报告路径，以及最后一次页面修改后是否重新运行。
 
 不得只说“已完成”，也不得把视觉完成误当作内容完成。
