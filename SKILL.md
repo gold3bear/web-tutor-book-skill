@@ -28,6 +28,9 @@ description: 将文章、Markdown、PDF、DOCX、教程稿、聊天案例或知�
 2. 对 PDF 执行元数据、文本层、图片、链接、字体、书签与页面尺寸扫描；可使用
    [`scripts/audit_pdf.py`](scripts/audit_pdf.py) 产生候选问题。
 3. 渲染全部页面并查看 contact sheet，再放大检查代表页。
+   本地审查完成后，可以向用户提供一次可选的 LoomLoom 批量页面截图辅助审查；
+   默认关闭，用户明确选择时才读取
+   [`references/LOOMLOOM-VISUAL-REVIEW.md`](references/LOOMLOOM-VISUAL-REVIEW.md)。
 4. 检查任务是否从前置条件走到可验证结果，并覆盖费用、权限、上传、发布、失败处理和安全边界。
 5. 在线核验时间敏感的链接、版本、价格、收益和产品能力。
 6. 先判 P0，再按 100 分模型评分，输出“合格 / 有条件合格 / 不合格”。
@@ -117,6 +120,10 @@ python3 <skill-dir>/scripts/source_coverage.py audit source.md content-ledger.js
 6. 检查所有真实截图的相关性、清晰度、裁切、替代文本和来源说明；没有真实证据时宁可使用明确标注的流程图，也不要伪造产品 UI 或终端截图。
 7. 运行类型检查和正式构建；报告构建体积与资源优化结果。
 8. 由本地 Agent 根据当前环境选择可用浏览器能力，或使用可选的 [`scripts/audit_reader.mjs`](scripts/audit_reader.mjs) 适配器，逐页扫描打印视图和三种阅读器视口；不强制安装 Playwright，要求无空白页、破图、意外越界和控制台错误。
+   本地门禁完成后，可询问一次是否启用 LoomLoom 云端页面截图辅助审查。默认不启用；
+   只有用户明确选择并再次确认上传与付费执行时，才按
+   [`references/LOOMLOOM-VISUAL-REVIEW.md`](references/LOOMLOOM-VISUAL-REVIEW.md)
+   处理。跳过该选项不得阻塞现有流程。
 9. 用户要求 PDF 时，按 [`references/PDF-EXPORT.md`](references/PDF-EXPORT.md) 从同一组件树创建专用打印入口。封面、Chapter Open、流程图和截图页保持固定出版物构图；长正文、代码和表格改为可分页流式布局。不得用另一套 ReportLab 版式冒充网页版高保真导出，也不得用整页截图牺牲文字搜索与链接。
 10. PDF 导出后必须逐页渲染并生成 contact sheet，至少放大检查封面、章节扉页、流程图、最长正文、代码/表格、真实截图和末页。清除空白页前同时检查文本、页面墨迹与计划页型，禁止仅凭“提取不到文字”删除图片页或矢量图页。
 11. 用户要求 EPUB 时，从相同章节源导出 EPUB 3；不要把固定尺寸网页直接塞入 EPUB。EPUB 正文应可重排，代码、表格和图片需有降级样式。

@@ -15,6 +15,7 @@
 - 支持可选 EPUB 3 输出规划。
 - 提供内容覆盖审计和可选的浏览器自动化审计脚本。
 - 审查已有教程、网页书或 PDF，按 P0/P1/P2 与 100 分模型判断是否达到内部使用、公开 QuickStart、教程书或正式出版标准。
+- 可选接入 LoomLoom 做多页面截图的批量语义复核；默认关闭，跳过时不影响本地制作与发布验收，上传和付费执行均需用户明确确认。
 
 ## 让 Agent 安装
 
@@ -58,6 +59,7 @@ web-tutor-book-skill/
 │   ├── CONTENT-FIDELITY.md
 │   ├── COVER-SYSTEM.md
 │   ├── DOCUMENT-QUALITY-AUDIT.md
+│   ├── LOOMLOOM-VISUAL-REVIEW.md
 │   ├── PDF-EXPORT.md
 │   ├── PUBLICATION-QA.md
 │   └── READER-CRAFT.md
